@@ -9,3 +9,14 @@ plan:
 5. test the project for edge cases and bugs
 6. write documentation for everything
 7. submit
+
+checklist:
+✔write collector.py
+✔write display.py
+✔integrate both in main.py
+✔write logger.py
+extras - optional
+ui improvments - more messages
+error handling
+documentation
+tests

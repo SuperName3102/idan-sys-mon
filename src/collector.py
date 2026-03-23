@@ -1,7 +1,7 @@
 import psutil
 
 class Collector:
-    def __init__(self, interval=2):
+    def __init__(self, interval):
         self.interval = interval
 
     def get_cpu_usage(self):
@@ -23,15 +23,22 @@ class Collector:
             disk_usage.append(partition_usage)
         return disk_usage
     
+    def get_network_usage(self):
+        net = psutil.net_io_counters()
+        network_usage = Network(net.bytes_sent, net.bytes_recv)
+        return network_usage
+    
     def collect_metrics(self):
         cpu_usage = self.get_cpu_usage()
         memory_usage = self.get_memory_usage()
         disk_usage = self.get_disk_usage()
+        network_usage = self.get_network_usage()
         
         return {
             "cpu": cpu_usage,
             "memory": memory_usage,
-            "disk": disk_usage
+            "disk": disk_usage,
+            "network": network_usage
         }
     
 
@@ -52,3 +59,8 @@ class CPU():
     def __init__(self, cpus):
         self.cpus = cpus
         self.total = round(sum(cpus)/len(cpus), 1)
+
+class Network():
+    def __init__(self, sent, recieved):
+        self.sent = sent
+        self.recieved = recieved

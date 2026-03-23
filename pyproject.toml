@@ -22,5 +22,6 @@ classifiers = [
 
 dependencies = [
     "psutil>=5.9.0",
-    "rich"
+    "rich",
+    "plyer"
 ]
