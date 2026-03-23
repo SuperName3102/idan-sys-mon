@@ -6,8 +6,6 @@ import time, sys, os
 from rich.live import Live
 from rich.console import Console
 
-interval = 2
-
 cmds = {
     "--interval": 2,
     "--log": "c:\\users\\idanh\\downloads\\idan-sys-mon\\log.txt",
@@ -29,7 +27,8 @@ def main():
             
             console.print(f"""[blue]Starting monitor with the following settings:
 Interval: {cmds['--interval']}, Log Path: {cmds['--log']}, 
-CPU Warning: {cmds['--cpu-warn']}, Memory Warning: {cmds['--mem-warn']}, Disk Warning: {cmds['--disk-warn']}
+CPU Warning: {cmds['--cpu-warn']}, Memory Warning: {cmds['--mem-warn']}, 
+Disk Warning: {cmds['--disk-warn']}, Network Warning: {cmds['--net-warn']}
 [/blue]""")
             
             if cmds["--log"] is None: pass
@@ -61,8 +60,13 @@ CPU Warning: {cmds['--cpu-warn']}, Memory Warning: {cmds['--mem-warn']}, Disk Wa
 def load_args():
     global cmds
     for arg, value in zip(sys.argv[1::2], sys.argv[2::2]):
-        if arg in cmds.keys(): cmds[arg] = value
-
+        try:
+            if arg in cmds.keys(): 
+                if arg == "--log": cmds[arg] = value
+                else: cmds[arg] = int(value)
+        except:
+            console.print(f"[red]Invalid argument {arg}, running with default value[/red]\n")
+        
 if __name__ == "__main__":
     load_args()
     main()
