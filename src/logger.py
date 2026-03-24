@@ -1,3 +1,8 @@
+"""Logging module for system metrics.
+
+Provides functionality to log system metrics to JSON files for historical
+tracking and analysis.
+"""
 from datetime import datetime
 from rich.console import Console
 import json
@@ -5,10 +10,26 @@ import json
 console = Console()
 
 class Logger:
+    """Logs system metrics to a JSON file.
+    
+    Attributes:
+        log_path (str): Path to the log file.
+    """
     def __init__(self, log_path):
+        """Initialize logger with file path.
+        
+        Args:
+            log_path (str): Path where log file will be written.
+        """
         self.log_path = log_path
     
     def log(self, metrics, timeframe):
+        """Write metrics to log file in JSON format.
+        
+        Args:
+            metrics (dict): System metrics dictionary.
+            timeframe (float): Time elapsed since last log in seconds.
+        """
         json_usage = usage_to_json(metrics, timeframe)
         
         try:
@@ -19,6 +40,15 @@ class Logger:
             console.print("[red]Error trying to open the log file or writing to it[/red]")
 
 def usage_to_json(metrics, timeframe):
+    """Convert metrics to JSON string with timestamp.
+    
+    Args:
+        metrics (dict): System metrics dictionary.
+        timeframe (float): Time elapsed since last reading in seconds.
+        
+    Returns:
+        str: JSON formatted metrics string.
+    """
     now = datetime.now()
     timestamp_string = now.strftime("%Y-%m-%d %H:%M:%S.%f")
     
@@ -58,6 +88,14 @@ def usage_to_json(metrics, timeframe):
     return json_usage
 
 def format_bytes(bytes):
+    """Convert bytes to human-readable format.
+    
+    Args:
+        bytes (float): Number of bytes.
+        
+    Returns:
+        str: Formatted byte string (e.g., '1.5 MB').
+    """
     exts = ["B", "KB", "MB", "GB", "TB"]
     counter = 0
     while bytes >= 1024 and counter <= 4:

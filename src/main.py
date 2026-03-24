@@ -1,3 +1,8 @@
+"""System monitoring application.
+
+Real-time system monitoring tool that tracks CPU, memory, disk, and network
+usage with configurable warning thresholds and logging capabilities.
+"""
 from collector import Collector
 from display import Display
 from logger import Logger
@@ -18,6 +23,10 @@ cmds = {
 console = Console()
 
 def main():
+    """Main monitoring loop.
+    
+    Collects and displays system metrics in real-time with optional logging.
+    """
     running = True
     log = False
     try:
@@ -61,6 +70,11 @@ Disk Warning: {cmds['--disk-warn']}, Network Warning: {cmds['--net-warn']}
         sys.exit(0)
     
 def load_args():
+    """Parse and load command-line arguments.
+    
+    Updates global cmds dictionary with provided arguments while maintaining
+    defaults for any omitted values.
+    """
     global cmds
     for arg, value in zip(sys.argv[1::2], sys.argv[2::2]):
         try:
