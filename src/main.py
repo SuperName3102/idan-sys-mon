@@ -56,7 +56,10 @@ Disk Warning: {cmds['--disk-warn']}, Network Warning: {cmds['--net-warn']}
     except KeyboardInterrupt:
         console.print("\n[purple]Ctrl+C pressed. Saving logs and exiting...[/purple]")
         sys.exit(0)
-
+    except Exception:
+        console.print("[red]General error, exiting program...[/red]\n")
+        sys.exit(0)
+    
 def load_args():
     global cmds
     for arg, value in zip(sys.argv[1::2], sys.argv[2::2]):

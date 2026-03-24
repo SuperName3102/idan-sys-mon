@@ -84,9 +84,12 @@ def get_warn_color(parameter, limit, type):
     return "on green"
 
 def send_notification(title, message, timeout=2):
-    notification.notify(
-        title=title,
-        message=message,
-        app_name="Idan System Monitor",
-        timeout=timeout,
-    )
+    try:
+        notification.notify(
+            title=title,
+            message=message,
+            app_name="Idan System Monitor",
+            timeout=timeout,
+        )
+    except Exception:
+        console.print("[red]Error sending desktop notification[/red]\n")

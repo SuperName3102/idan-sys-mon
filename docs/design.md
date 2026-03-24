@@ -17,6 +17,6 @@ checklist:
 ✔write logger.py
 ✔extras - optional
 ✔ui improvments - more messages
-error handling
+✔error handling
 documentation
 tests

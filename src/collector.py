@@ -5,28 +5,39 @@ class Collector:
         self.interval = interval
 
     def get_cpu_usage(self):
-        cpu_usage = CPU(psutil.cpu_percent(interval=self.interval, percpu=True))
-        return cpu_usage
-        
+        try:
+            cpu_usage = CPU(psutil.cpu_percent(interval=self.interval, percpu=True))
+            return cpu_usage
+        except Exception:
+            return CPU([-1])
+    
     def get_memory_usage(self):
-        memory_info = psutil.virtual_memory()
-        memory_usage = Memory(memory_info.total, memory_info.used, memory_info.percent)
-        
-        return memory_usage
-
+        try:
+            memory_info = psutil.virtual_memory()
+            memory_usage = Memory(memory_info.total, memory_info.used, memory_info.percent)
+            return memory_usage
+        except Exception:
+            return Memory(-1, -1, -1)
+            
     def get_disk_usage(self):
-        partitions = [part.device for part in psutil.disk_partitions()]
-        disk_usage = []
-        for partition in partitions:
-            disk_info = psutil.disk_usage(partition)
-            partition_usage = DiskPartition(partition, disk_info.total, disk_info.used, disk_info.percent)
-            disk_usage.append(partition_usage)
-        return disk_usage
+        try:
+            partitions = [part.device for part in psutil.disk_partitions()]
+            disk_usage = []
+            for partition in partitions:
+                disk_info = psutil.disk_usage(partition)
+                partition_usage = DiskPartition(partition, disk_info.total, disk_info.used, disk_info.percent)
+                disk_usage.append(partition_usage)
+            return disk_usage
+        except Exception:
+            return [DiskPartition("-1", -1, -1, -1)]
     
     def get_network_usage(self):
-        net = psutil.net_io_counters()
-        network_usage = Network(net.bytes_sent, net.bytes_recv)
-        return network_usage
+        try:
+            net = psutil.net_io_counters()
+            network_usage = Network(net.bytes_sent, net.bytes_recv)
+            return network_usage
+        except Exception:
+            return Network(-1, -1)
     
     def collect_metrics(self):
         cpu_usage = self.get_cpu_usage()

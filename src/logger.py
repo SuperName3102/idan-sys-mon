@@ -14,8 +14,9 @@ class Logger:
         try:
             with open(self.log_path, "a") as f:
                 f.write(json_usage)
+                f.write(",\n")
         except PermissionError:
-            console.print("[red]Error trying to open the log file[/red]")
+            console.print("[red]Error trying to open the log file or writing to it[/red]")
 
 def usage_to_json(metrics, timeframe):
     now = datetime.now()
