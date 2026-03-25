@@ -18,5 +18,5 @@ checklist:
 ✔extras - optional
 ✔ui improvments - more messages
 ✔error handling
-documentation
-tests
+✔documentation
+✔tests

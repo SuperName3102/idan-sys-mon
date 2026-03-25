@@ -21,7 +21,8 @@ classifiers = [
 ]
 
 dependencies = [
-    "psutil>=5.9.0",
+    "psutil",
     "rich",
-    "plyer"
+    "plyer",
+    "pytest"
 ]
